@@ -1,9 +1,9 @@
 // Adding photos: resize in the browser (which also strips the file's metadata),
 // read when and where each was taken, and suggest the stop it belongs to.
-import { db } from './db.js?v=1';
-import { CONFIG } from './config.js?v=1';
-import { h, icon, openDialog, toast, dayLabel, daysBetween, toISO } from './ui.js?v=1';
-import { distanceKm } from './places.js?v=1';
+import { db } from './db.js?v=2';
+import { CONFIG } from './config.js?v=2';
+import { h, icon, openDialog, toast, dayLabel, daysBetween, toISO } from './ui.js?v=2';
+import { distanceKm } from './places.js?v=2';
 
 let exifr;
 async function readExif(file) {

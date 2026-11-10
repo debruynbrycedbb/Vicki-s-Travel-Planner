@@ -1,5 +1,5 @@
 // Finding places: search by name, reverse lookup, and reading coordinates from pasted links.
-import { CONFIG } from './config.js?v=1';
+import { CONFIG } from './config.js?v=2';
 
 const key = CONFIG.MAPTILER_KEY;
 

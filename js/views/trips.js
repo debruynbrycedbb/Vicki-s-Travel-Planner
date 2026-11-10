@@ -1,7 +1,7 @@
 // Home: every trip you can see, upcoming or past, with all their stops on the map.
-import { db, loadTrips, photoUrls } from '../db.js?v=1';
-import { h, icon, openDialog, field, input, textarea, attempt, toast, tripStatus, countdown, fmtRange, emptyState, initials } from '../ui.js?v=1';
-import { setPins, setRoute, fitTo, worldView } from '../map.js?v=1';
+import { db, loadTrips, photoUrls } from '../db.js?v=2';
+import { h, icon, openDialog, field, input, textarea, attempt, toast, tripStatus, countdown, fmtRange, emptyState, initials } from '../ui.js?v=2';
+import { setPins, setRoute, fitTo, worldView } from '../map.js?v=2';
 
 const CURRENCIES = ['EUR', 'GBP', 'USD', 'ZAR', 'CHF', 'JPY', 'AUD', 'CAD', 'NZD', 'SEK', 'NOK', 'DKK', 'PLN', 'CZK', 'HUF', 'TRY', 'THB', 'SGD', 'HKD', 'CNY', 'INR', 'IDR', 'MXN', 'BRL', 'KRW', 'ISK', 'RON', 'BGN', 'ILS', 'MYR', 'PHP'];
 export const currencySelect = (value = 'EUR') => {

@@ -17,4 +17,4 @@ export const CONFIG = {
   DEFAULT_CURRENCY: 'EUR',
 };
 
-export const VERSION = '1';
+export const VERSION = '2';

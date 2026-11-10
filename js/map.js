@@ -1,6 +1,6 @@
 // The world map behind every screen: painted/satellite styles, pins, routes, picking a spot.
-import { CONFIG } from './config.js?v=1';
-import { h, toast } from './ui.js?v=1';
+import { CONFIG } from './config.js?v=2';
+import { h, toast } from './ui.js?v=2';
 
 const maplibregl = window.maplibregl;
 const STYLE_KEY = 'vtp:mapStyle';
@@ -81,12 +81,14 @@ export function setPins(pins) {
   markers = pins.map((p) => {
     const el = h('button', {
       type: 'button',
+      // MapLibre positions this element with its own transform: never style or animate
+      // the element's transform, only the dot inside it.
       class: `pin pin-${p.variant}${p.active ? ' is-active' : ''}${p.label ? ' has-label' : ''}`,
       'aria-label': p.title,
       title: p.title,
       style: p.colour ? `--pin:${p.colour}` : null,
       onclick: (e) => { e.stopPropagation(); p.onClick?.(); },
-    }, p.label ? h('span', {}, p.label) : null);
+    }, h('span', { class: 'pin-dot', 'aria-hidden': 'true' }, p.label ? h('span', { class: 'pin-label' }, p.label) : null));
     return new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat([p.lng, p.lat]).addTo(map);
   });
 }

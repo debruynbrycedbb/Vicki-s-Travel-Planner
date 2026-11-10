@@ -1,7 +1,7 @@
 // Signed-out screen: sign in, create an account (with the family code), reset a password.
-import { h, field, input, openDialog, brandMark } from '../ui.js?v=1';
-import { CONFIG } from '../config.js?v=1';
-import { getMap } from '../map.js?v=1';
+import { h, field, input, openDialog, brandMark } from '../ui.js?v=2';
+import { CONFIG } from '../config.js?v=2';
+import { getMap } from '../map.js?v=2';
 
 function spinGlobe() {
   const map = getMap();

@@ -1,15 +1,15 @@
 // One trip: header, tabs (itinerary, photos, bookings, budget, packing, people) and a stop's page.
-import { db, loadTrips, photoUrls } from '../db.js?v=1';
+import { db, loadTrips, photoUrls } from '../db.js?v=2';
 import {
   h, icon, attempt, toast, openDialog, confirmDialog, field, input, textarea, select, emptyState,
   tripStatus, countdown, fmtRange, tripDays, dayLabel, dayColour, KINDS,
-} from '../ui.js?v=1';
-import { setPins, setRoute, fitTo, flyTo, pickPoint } from '../map.js?v=1';
-import { searchPlaces, reversePlace, parseCoords, isShortGoogleLink } from '../places.js?v=1';
-import { tripForm } from './trips.js?v=1';
-import { renderBookings, renderBudget, renderPacking, renderPeople } from './trip-tabs.js?v=1';
-import { openUploader } from '../upload.js?v=1';
-import { openLightbox, photoGrid } from './photos.js?v=1';
+} from '../ui.js?v=2';
+import { setPins, setRoute, fitTo, flyTo, pickPoint } from '../map.js?v=2';
+import { searchPlaces, reversePlace, parseCoords, isShortGoogleLink } from '../places.js?v=2';
+import { tripForm } from './trips.js?v=2';
+import { renderBookings, renderBudget, renderPacking, renderPeople } from './trip-tabs.js?v=2';
+import { openUploader } from '../upload.js?v=2';
+import { openLightbox, photoGrid } from './photos.js?v=2';
 
 const TABS = { itinerary: 'Itinerary', photos: 'Photos', bookings: 'Bookings', budget: 'Budget', packing: 'Packing', people: 'People' };
 let lastKey = '';

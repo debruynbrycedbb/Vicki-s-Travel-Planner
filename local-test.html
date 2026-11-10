@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="css/style.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
   <div id="map" role="region" aria-label="World map"></div>
@@ -104,9 +104,9 @@
     };
     window.__harness = { db, env, worker, R2, sql: (q, p = []) => exec(q, p), API };
 
-    const { CONFIG } = await import('./js/config.js?v=1');
+    const { CONFIG } = await import('./js/config.js?v=2');
     CONFIG.API_URL = API;
-    await import('./js/app.js?v=1');
+    await import('./js/app.js?v=2');
   </script>
 </body>
 </html>

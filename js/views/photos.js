@@ -1,7 +1,7 @@
 // Photo grid, the lightbox, and the page with every photo from every trip.
-import { db, loadTrips, photoUrls } from '../db.js?v=1';
-import { h, icon, attempt, confirmDialog, emptyState, fmtRange, fmtDate, tripStatus } from '../ui.js?v=1';
-import { setPins, setRoute, fitTo } from '../map.js?v=1';
+import { db, loadTrips, photoUrls } from '../db.js?v=2';
+import { h, icon, attempt, confirmDialog, emptyState, fmtRange, fmtDate, tripStatus } from '../ui.js?v=2';
+import { setPins, setRoute, fitTo } from '../map.js?v=2';
 
 export function photoGrid(list, url, onOpen) {
   return h('ul', { class: 'photo-grid' }, list.map((p, i) => h('li', {},

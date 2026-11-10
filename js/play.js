@@ -1,9 +1,9 @@
 // Play the trip: the map flies stop to stop, drawing the route, with each stop's photos.
-import { db, loadTrips, photoUrls } from './db.js?v=1';
-import { h, icon, fmtRange, dayLabel, dayColour, KINDS, tripDays } from './ui.js?v=1';
-import { setPins, setRoute, flyTo, fitTo, worldView, getMap } from './map.js?v=1';
-import { orderStops } from './views/trip.js?v=1';
-import { distanceKm } from './places.js?v=1';
+import { db, loadTrips, photoUrls } from './db.js?v=2';
+import { h, icon, fmtRange, dayLabel, dayColour, KINDS, tripDays } from './ui.js?v=2';
+import { setPins, setRoute, flyTo, fitTo, worldView, getMap } from './map.js?v=2';
+import { orderStops } from './views/trip.js?v=2';
+import { distanceKm } from './places.js?v=2';
 
 export async function playTrip(app, id) {
   const trip = (await loadTrips()).find((t) => t.id === id);

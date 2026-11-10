@@ -55,27 +55,35 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 6px 0; width: 100%; }
 .maplibregl-ctrl-bottom-right { right: 64px; }
 
 .pin {
+  /* The hit area. MapLibre sets this element's transform to place it: no transform or transition here. */
   --pin: var(--stamp);
-  width: 14px; height: 14px; padding: 0;
+  width: 32px; height: 32px; padding: 0; margin: 0;
+  border: 0; background: none; cursor: pointer;
+  display: grid; place-items: center;
+}
+.pin:hover, .pin.is-active { z-index: 2; }
+.pin-dot {
+  width: 14px; height: 14px;
   border-radius: 50%;
   border: 2px solid #fffaf0;
   background: var(--pin);
   box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
-  cursor: pointer;
+  display: grid; place-items: center;
   transition: transform .15s ease;
 }
-.pin::before { content: ""; position: absolute; inset: -9px; }
-.pin:hover, .pin.is-active { transform: scale(1.35); z-index: 2; }
+.pin:hover .pin-dot, .pin.is-active .pin-dot { transform: scale(1.35); }
 .pin-past { --pin: var(--teal); }
-.pin-wishlist { --pin: var(--gold); border-radius: 3px; transform: rotate(45deg); width: 13px; height: 13px; }
-.pin-wishlist:hover, .pin-wishlist.is-active { transform: rotate(45deg) scale(1.35); }
-.pin.has-label {
+.pin-wishlist { --pin: var(--gold); }
+.pin-wishlist .pin-dot { border-radius: 3px; transform: rotate(45deg); width: 13px; height: 13px; }
+.pin-wishlist:hover .pin-dot, .pin-wishlist.is-active .pin-dot { transform: rotate(45deg) scale(1.35); }
+.pin.has-label .pin-dot {
   width: 26px; height: 26px;
-  display: grid; place-items: center;
   font: 600 12px/1 var(--mono);
   color: #fff;
 }
-.pin.is-active { box-shadow: 0 0 0 4px rgba(255, 250, 240, .75), 0 2px 8px rgba(0, 0, 0, .4); }
+.pin.is-active .pin-dot { box-shadow: 0 0 0 4px rgba(255, 250, 240, .75), 0 2px 8px rgba(0, 0, 0, .4); }
+.pin:focus-visible { outline: none; }
+.pin:focus-visible .pin-dot { outline: 2.5px solid var(--focus); outline-offset: 2px; }
 
 .vtp-popup .maplibregl-popup-content { background: var(--paper); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); font-family: var(--body); }
 .vtp-popup .maplibregl-popup-tip { border-top-color: var(--paper); border-bottom-color: var(--paper); }

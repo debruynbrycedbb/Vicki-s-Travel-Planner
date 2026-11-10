@@ -1,8 +1,8 @@
 // Wishlist: places you'd like to go some day, as gold pins. Private to you.
-import { db } from '../db.js?v=1';
-import { h, icon, attempt, toast, openDialog, confirmDialog, field, input, textarea, emptyState } from '../ui.js?v=1';
-import { setPins, setRoute, fitTo, flyTo, pickPoint, worldView } from '../map.js?v=1';
-import { searchPlaces, reversePlace, parseCoords, isShortGoogleLink } from '../places.js?v=1';
+import { db } from '../db.js?v=2';
+import { h, icon, attempt, toast, openDialog, confirmDialog, field, input, textarea, emptyState } from '../ui.js?v=2';
+import { setPins, setRoute, fitTo, flyTo, pickPoint, worldView } from '../map.js?v=2';
+import { searchPlaces, reversePlace, parseCoords, isShortGoogleLink } from '../places.js?v=2';
 
 export async function renderWishlist(app, stale, focusId) {
   const items = await db.list('wishlist', {}, [['created_at', false]]);

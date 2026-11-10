@@ -1,7 +1,7 @@
 // Data layer. Every screen talks to `db`: either the Cloudflare Worker API, or the demo
 // store (this browser only) when no API address is set yet or ?demo is in the URL.
-import { CONFIG } from './config.js?v=1';
-import { demoBackend } from './demo-db.js?v=1';
+import { CONFIG } from './config.js?v=2';
+import { demoBackend } from './demo-db.js?v=2';
 
 const wantsDemo = new URLSearchParams(location.search).has('demo') || !CONFIG.API_URL;
 const TOKEN_KEY = 'vtp:token';

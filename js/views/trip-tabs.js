@@ -1,7 +1,7 @@
 // Trip tabs: bookings, budget, packing list and people.
-import { db } from '../db.js?v=1';
-import { h, icon, attempt, toast, openDialog, confirmDialog, field, input, textarea, select, emptyState, fmtDateTime, money, initials } from '../ui.js?v=1';
-import { currencySelect } from './trips.js?v=1';
+import { db } from '../db.js?v=2';
+import { h, icon, attempt, toast, openDialog, confirmDialog, field, input, textarea, select, emptyState, fmtDateTime, money, initials } from '../ui.js?v=2';
+import { currencySelect } from './trips.js?v=2';
 
 // ---------- Bookings ----------
 const BOOKING_KINDS = { flight: 'Flight', stay: 'Stay', train: 'Train', bus: 'Bus', car: 'Car hire', ferry: 'Ferry', activity: 'Activity or tickets', other: 'Other' };

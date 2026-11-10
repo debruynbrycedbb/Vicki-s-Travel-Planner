@@ -1,6 +1,6 @@
 // Account menu: name, password, backup, Travel World Map import, sign out.
-import { db, loadTrips } from './db.js?v=1';
-import { h, icon, openDialog, field, input, select, toast, attempt, todayISO, initials } from './ui.js?v=1';
+import { db, loadTrips } from './db.js?v=2';
+import { h, icon, openDialog, field, input, select, toast, attempt, todayISO, initials } from './ui.js?v=2';
 
 export function openAccount(app) {
   const name = input({ value: app.me.display_name, maxlength: 60 });

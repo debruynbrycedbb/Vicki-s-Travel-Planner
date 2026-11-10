@@ -1,15 +1,15 @@
 // Vicki's Travel Planner: start-up, layout, navigation and the place search.
-import { db, loadTrips } from './db.js?v=1';
-import { h, $, icon, toast, attempt, openDialog, field, select, debounce, initials, brandMark, tripStatus, fmtRange, tripDays, dayLabel, KINDS } from './ui.js?v=1';
-import { initMap, setInsets, onMapContext, flyTo, getMap, setMapMode, mapMode, worldView, setPins, setRoute, resize } from './map.js?v=1';
-import { searchPlaces, reversePlace } from './places.js?v=1';
-import { renderAuth } from './views/auth.js?v=1';
-import { renderTrips } from './views/trips.js?v=1';
-import { renderTrip } from './views/trip.js?v=1';
-import { renderWishlist } from './views/wishlist.js?v=1';
-import { renderPhotos } from './views/photos.js?v=1';
-import { playTrip } from './play.js?v=1';
-import { openAccount } from './account.js?v=1';
+import { db, loadTrips } from './db.js?v=2';
+import { h, $, icon, toast, attempt, openDialog, field, select, debounce, initials, brandMark, tripStatus, fmtRange, tripDays, dayLabel, KINDS } from './ui.js?v=2';
+import { initMap, setInsets, onMapContext, flyTo, getMap, setMapMode, mapMode, worldView, setPins, setRoute, resize } from './map.js?v=2';
+import { searchPlaces, reversePlace } from './places.js?v=2';
+import { renderAuth } from './views/auth.js?v=2';
+import { renderTrips } from './views/trips.js?v=2';
+import { renderTrip } from './views/trip.js?v=2';
+import { renderWishlist } from './views/wishlist.js?v=2';
+import { renderPhotos } from './views/photos.js?v=2';
+import { playTrip } from './play.js?v=2';
+import { openAccount } from './account.js?v=2';
 
 const mobileQuery = window.matchMedia('(max-width: 759px)');
 const isMobile = () => mobileQuery.matches;
