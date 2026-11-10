@@ -1,0 +1,85 @@
+{
+  "about": "Copy of the 8 places from the Travel World Map (Oct 2026), imported into a wishlist from Account → Import.",
+  "places": [
+    {
+      "source_id": "site-es-as-catedrais",
+      "name": "As Catedrais Beach",
+      "lat": 43.55406,
+      "lng": -7.15723,
+      "place": "Galicia, Spain",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/as-catedrais-beach.jpg"
+    },
+    {
+      "source_id": "site-es-setenil",
+      "name": "Setenil de las Bodegas",
+      "lat": 36.8625,
+      "lng": -5.18139,
+      "place": "Andalusia, Spain",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/setenil-de-las-bodegas.jpg"
+    },
+    {
+      "source_id": "site-es-bardenas-reales",
+      "name": "Bardenas Reales",
+      "lat": 42.1878,
+      "lng": -1.4687,
+      "place": "Navarre, Spain",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/bardenas-reales.jpg"
+    },
+    {
+      "source_id": "site-es-lakes-covadonga",
+      "name": "Lakes of Covadonga",
+      "lat": 43.283,
+      "lng": -4.95,
+      "place": "Asturias, Spain",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/lakes-of-covadonga.jpg"
+    },
+    {
+      "source_id": "site-es-las-medulas",
+      "name": "Las Médulas",
+      "lat": 42.45889,
+      "lng": -6.76,
+      "place": "León, Spain",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/las-medulas.jpg"
+    },
+    {
+      "source_id": "site-es-ordesa-valley",
+      "name": "Ordesa Valley",
+      "lat": 42.67167,
+      "lng": 0.05556,
+      "place": "Pyrenees, Spain",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/ordesa-valley.jpg"
+    },
+    {
+      "source_id": "site-tr-cappadocia",
+      "name": "Cappadocia",
+      "lat": 38.64306,
+      "lng": 34.82889,
+      "place": "Türkiye",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/cappadocia.jpg"
+    },
+    {
+      "source_id": "site-jo-petra",
+      "name": "Petra",
+      "lat": 30.32896,
+      "lng": 35.44483,
+      "place": "Jordan",
+      "notes": "",
+      "links": [],
+      "image_url": "assets/import/petra.jpg"
+    }
+  ]
+}

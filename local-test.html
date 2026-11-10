@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vicki’s Travel Planner (local API test)</title>
+  <!-- Local test only: runs worker/worker.js in this page with an in-memory SQLite database
+       (sql.js) standing in for D1, and IndexedDB standing in for R2. Nothing leaves the browser.
+       Family code: test-family-code · Admin email: admin@test.local · Add ?reset to start over. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+  <div id="map" role="region" aria-label="World map"></div>
+  <main id="panel" class="panel" hidden></main>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/sql-wasm.js"></script>
+  <script type="module">
+    import worker from './worker/worker.js';
+
+    const API = 'https://api.test';
+    const DB_KEY = 'vtp:harness:db';
+    if (new URLSearchParams(location.search).has('reset')) {
+      localStorage.removeItem(DB_KEY); localStorage.removeItem('vtp:token');
+      indexedDB.deleteDatabase('vtp-harness-r2');
+    }
+
+    // ---- D1 stand-in (sql.js), saved to localStorage so it survives reloads ----
+    const SQL = await initSqlJs({ locateFile: (f) => `https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/${f}` });
+    const saved = localStorage.getItem(DB_KEY);
+    const db = saved ? new SQL.Database(Uint8Array.from(atob(saved), (c) => c.charCodeAt(0))) : new SQL.Database();
+    db.run('PRAGMA foreign_keys = ON');
+    if (!saved) db.exec(await (await fetch('worker/schema.sql')).text());
+    const persist = () => {
+      const bytes = db.export();
+      db.run('PRAGMA foreign_keys = ON');   // export() resets pragmas
+      let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      localStorage.setItem(DB_KEY, btoa(s));
+    };
+    const exec = (sql, params) => {
+      const st = db.prepare(sql);
+      st.bind(params.map((v) => (v === undefined ? null : v)));
+      const rows = [];
+      while (st.step()) rows.push(st.getAsObject());
+      st.free();
+      return rows;
+    };
+    class Stmt {
+      constructor(sql, params = []) { this.sql = sql; this.params = params; }
+      bind(...p) { return new Stmt(this.sql, p); }
+      async all() { const r = exec(this.sql, this.params); persist(); return { results: r, success: true }; }
+      async first() { const r = exec(this.sql, this.params); persist(); return r[0] ?? null; }
+      async run() { exec(this.sql, this.params); persist(); return { success: true, meta: { changes: db.getRowsModified() } }; }
+    }
+    const D1 = {
+      prepare: (sql) => new Stmt(sql),
+      async batch(stmts) {
+        db.run('BEGIN');
+        try { const out = stmts.map((s) => ({ results: exec(s.sql, s.params) })); db.run('COMMIT'); persist(); return out; }
+        catch (e) { db.run('ROLLBACK'); throw e; }
+      },
+    };
+
+    // ---- R2 stand-in (IndexedDB) ----
+    const idb = await new Promise((res, rej) => {
+      const r = indexedDB.open('vtp-harness-r2', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('o');
+      r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+    });
+    const tx = (mode, fn) => new Promise((res, rej) => { const t = idb.transaction('o', mode); const out = fn(t.objectStore('o')); t.oncomplete = () => res(out.result); t.onerror = () => rej(t.error); });
+    const R2 = {
+      async put(key, buf, { httpMetadata } = {}) { await tx('readwrite', (s) => s.put({ buf, type: httpMetadata?.contentType }, key)); },
+      async get(key) {
+        const v = await tx('readonly', (s) => s.get(key));
+        return v ? { body: new Blob([v.buf], { type: v.type }).stream(), httpMetadata: { contentType: v.type } } : null;
+      },
+      async delete(keys) { for (const k of [].concat(keys)) await tx('readwrite', (s) => s.delete(k)); },
+      async count() { return tx('readonly', (s) => s.count()); },
+    };
+
+    const env = { DB: D1, PHOTOS: R2, FAMILY_CODE: 'test-family-code', SIGNING_KEY: 'local-test-signing-key', ADMIN_EMAILS: 'admin@test.local' };
+
+    // ---- Send the site's API calls to the Worker code in this page ----
+    const realFetch = window.fetch.bind(window);
+    window.fetch = async (input, init) => {
+      const req = new Request(input, init);
+      if (!req.url.startsWith(API)) return realFetch(input, init);
+      let res = await worker.fetch(req, env);
+      if (req.url.endsWith('/photos/sign') && res.ok) {
+        // <img> tags can't reach this fake address, so fetch each signed link through the Worker.
+        const map = await res.json();
+        for (const [k, url] of Object.entries(map)) {
+          const r = await worker.fetch(new Request(url), env);
+          map[k] = r.ok ? URL.createObjectURL(await r.blob()) : '';
+        }
+        res = new Response(JSON.stringify(map), { headers: { 'Content-Type': 'application/json' } });
+      }
+      return res;
+    };
+    window.__harness = { db, env, worker, R2, sql: (q, p = []) => exec(q, p), API };
+
+    const { CONFIG } = await import('./js/config.js?v=1');
+    CONFIG.API_URL = API;
+    await import('./js/app.js?v=1');
+  </script>
+</body>
+</html>
